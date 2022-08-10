@@ -1,0 +1,12 @@
+[workspace]
+members = [
+  "pj_app",
+  "pj_common",
+  "pj_core",
+  "pj_infra",
+  "pj_presentation",
+]
+
+default_members = [
+  "pj_app",
+]
