@@ -6,11 +6,12 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-tokio = "1.20.1"
 axum = "0.5.15"
+sqlx = { version = "0.6", features = [ "runtime-tokio-native-tls" , "postgres", "uuid", "time" ] }
+tokio = { version = "1.20.1", features = ["full"] }
+anyhow = "1.0.61"
+async-trait = "0.1.57"
 
 # workspace
 pj_common = { path = "../pj_common" }
 pj_core = { path = "../pj_core" }
-pj_infra = { path = "../pj_infra" }
-pj_presentation = { path = "../pj_presentation" }

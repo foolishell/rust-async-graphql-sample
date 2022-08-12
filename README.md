@@ -51,11 +51,10 @@ flowchart TD
 graph TD;
     subgraph pj_app
         main.rs --> config;
-        config;
+        main.rs --> infra/repository;
     end
-    subgraph pj_presentation
-        graphql;
-        rest;
+    subgraph pj_graphql
+        schema;
     end
     subgraph pj_core
         usecase;
@@ -65,20 +64,14 @@ graph TD;
         repository_trait;
         service-->repository_trait;
     end
-    subgraph pj_infra
-        repository-->external_api;
-    end
 
-    main.rs --> graphql;
-    main.rs --> rest;
-    main.rs --> repository;
-    graphql --> usecase;
-    rest --> usecase;
+    main.rs --> schema;
+    main.rs --> usecase;
     usecase --> service;
     usecase --> repository_trait;
     usecase --> event;
     usecase --> model;
-    repository --> repository_trait;
+    infra/repository --> repository_trait;
 ```
 
 
