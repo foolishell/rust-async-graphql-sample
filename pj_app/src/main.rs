@@ -1,15 +1,22 @@
-use axum::http::StatusCode;
-use axum::response::IntoResponse;
+use axum::extract::Path;
+
+
 use axum::routing::get;
 use axum::{Extension, Json, Router};
 use infra::repository::product_repository::ProductRepository;
+use pj_core::model::product::Product;
 use pj_core::usecase::get_product::GetProductUsecase;
 use sqlx::postgres::PgPoolOptions;
 use sqlx::PgPool;
+
+
 use std::net::SocketAddr;
 use std::sync::Arc;
 
+use crate::error::AppError;
+
 mod infra;
+mod error;
 
 struct State {
     pool: PgPool,
@@ -23,7 +30,7 @@ async fn main() -> anyhow::Result<()> {
         .await?;
 
     let app = Router::new()
-        .route("/product", get(get_product))
+        .route("/product/:id", get(get_product))
         .layer(Extension(Arc::new(State { pool: pool })));
 
     let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
@@ -35,12 +42,14 @@ async fn main() -> anyhow::Result<()> {
     Ok(())
 }
 
-async fn get_product(Extension(state): Extension<Arc<State>>) -> impl IntoResponse {
+async fn get_product(
+    Path(product_id): Path<String>,
+    Extension(state): Extension<Arc<State>>
+) -> anyhow::Result<Json<Option<Product>>, AppError> {
     let repo = ProductRepository::new(state.pool.clone());
     let product = GetProductUsecase::new(repo)
-        .execute(String::from("4a55e1e5-fdea-4754-976b-a8719afbc645"))
-        .await
-        .unwrap();
+        .execute(product_id)
+        .await?;
 
-    (StatusCode::OK, Json(product))
+    Ok(Json(product))
 }

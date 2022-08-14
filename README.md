@@ -30,6 +30,8 @@ erDiagram
     }
 ```
 
+- inventoryQuantity はDB上ではイベントエンティティとして記録する。
+
 ## Architecture
 ### オニオンアーキテクチャ
 ```mermaid

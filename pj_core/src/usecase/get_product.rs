@@ -1,3 +1,4 @@
+
 use crate::model::product::Product;
 use crate::repository_trait::ProductRepositoryTrait;
 
@@ -10,8 +11,7 @@ impl<PR: ProductRepositoryTrait> GetProductUsecase<PR> {
         Self { product_repo }
     }
 
-    pub async fn execute(&self, product_id: String) -> anyhow::Result<Product> {
-        let product = self.product_repo.find_product(product_id).await?;
-        Ok(product)
+    pub async fn execute(&self, product_id: String) -> anyhow::Result<Option<Product>, PR::Err> {
+        Ok(self.product_repo.find_product(product_id).await?)
     }
 }

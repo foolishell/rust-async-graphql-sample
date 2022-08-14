@@ -47,7 +47,7 @@ CREATE TRIGGER refresh_users_updated_at_step3
   EXECUTE PROCEDURE refresh_updated_at_step3();
 
 CREATE TABLE IF NOT EXISTS product_inventory_evt (
-  product_id uuid primary key NOT NULL DEFAULT gen_random_uuid(),
+  product_id uuid NOT NULL REFERENCES product_rsc(product_id),
   quantity int NOT NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT clock_timestamp(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT clock_timestamp()
