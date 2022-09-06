@@ -3,9 +3,4 @@ members = [
   "pj_app",
   "pj_common",
   "pj_core",
-  "pj_graphql",
-]
-
-default_members = [
-  "pj_app",
 ]

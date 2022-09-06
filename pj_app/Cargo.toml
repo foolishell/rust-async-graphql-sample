@@ -11,7 +11,20 @@ sqlx = { version = "0.6", features = [ "runtime-tokio-native-tls" , "postgres", 
 tokio = { version = "1.20.1", features = ["full"] }
 anyhow = "1.0.61"
 async-trait = "0.1.57"
+async-graphql = "3.0.37"
+async-graphql-derive = "3.0.37"
+async-graphql-value = "3.0.37"
+async-graphql-axum = "3.0.37"
+derive_more = { version = "0.99.17", features = ['constructor'] }
+derive-getters = "0.2.0"
+log = "0.4.17"
 
 # workspace
 pj_common = { path = "../pj_common" }
 pj_core = { path = "../pj_core" }
+
+[dependencies.uuid]
+version = "1.1.2"
+features = [
+    "v4",                # Lets you generate random UUIDs
+]
