@@ -54,9 +54,7 @@ graph TD;
     subgraph pj_app
         main.rs --> config;
         main.rs --> infra/repository;
-    end
-    subgraph pj_graphql
-        schema;
+        main.rs --> pj_graphql;
     end
     subgraph pj_core
         usecase;
@@ -67,8 +65,7 @@ graph TD;
         service-->repository_trait;
     end
 
-    main.rs --> schema;
-    main.rs --> usecase;
+    pj_graphql --> usecase;
     usecase --> service;
     usecase --> repository_trait;
     usecase --> event;
