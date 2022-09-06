@@ -1,9 +1,10 @@
+use derive_getters::Getters;
 use serde::Serialize;
-use validator::{Validate};
+use validator::Validate;
 
 use crate::error::DomainError;
 
-#[derive(Serialize, Validate, Clone)]
+#[derive(Serialize, Validate, Clone, Debug, PartialEq, Eq, Getters)]
 pub struct Product {
     product_id: String,
     name: String,
@@ -14,7 +15,12 @@ pub struct Product {
 }
 
 impl Product {
-    pub fn new(product_id: String, name: String, price: i32, inventory_quantity: i32) -> anyhow::Result<Self, DomainError> {
+    pub fn new(
+        product_id: String,
+        name: String,
+        price: i32,
+        inventory_quantity: i32,
+    ) -> anyhow::Result<Self, DomainError> {
         let product = Self {
             product_id,
             name,

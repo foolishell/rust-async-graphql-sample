@@ -1,5 +1,8 @@
+use std::fmt::Display;
+
 use validator::ValidationErrors;
 
+#[derive(Debug)]
 pub enum DomainError {
     ValidateError(String),
 }
@@ -10,4 +13,10 @@ impl From<ValidationErrors> for DomainError {
     }
 }
 
-pub trait AppErrorTrait {}
+impl Display for DomainError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::ValidateError(error) => write!(f, "{}", error),
+        }
+    }
+}
